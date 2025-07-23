@@ -1,15 +1,21 @@
 <script setup>
 import ToDo from './ToDo.vue'
-const emit = defineEmits(['complete-todo'])
+
+const emit = defineEmits(['complete-todo', 'delete-todo'])
 const props = defineProps({
   todos: {
     type: Array,
     default: [],
   },
 })
+
 const markTodoAsComplete = (index) => {
   emit('complete-todo', index)
 }
+const deleteTodoHandler = (index) => {
+  emit('delete-todo',index)
+}
+
 </script>
 
 <template>
@@ -19,7 +25,7 @@ const markTodoAsComplete = (index) => {
       :key="index"
       :todo="todo"
       @complete-todo="() => markTodoAsComplete(index)"
-    />
+      @delete-todo="() => deleteTodoHandler(index)" />
   </div>
 </template>
 

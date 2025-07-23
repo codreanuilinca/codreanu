@@ -8,8 +8,21 @@ const todos = ref([
   { title: 'Lorean Ipsum2', isDone: false },
   { title: 'Lorean Ipsum3', isDone: false },
 ])
+
 const markTodoAsComplete = (index) => {
   todos.value[index].isDone = !todos.value[index].isDone
+}
+const createTodoHandler = () => {
+  const todoTitle = prompt('Enter todo title')
+
+  todos.value.push({
+    title: todoTitle,
+    isDone: false,
+  })
+}
+
+const deleteTodoHandler = (index) => {
+  todos.value.splice(index, 1)
 }
 </script>
 
@@ -18,12 +31,17 @@ const markTodoAsComplete = (index) => {
     <div id="todo">
       <header>GGIT ToDo</header>
 
-      <ToDoList :todos="todos" @complete-todo="markTodoAsComplete" />
+      <ToDoList
+        :todos="todos"
+        @complete-todo="markTodoAsComplete"
+        @delete-todo="deleteTodoHandler"
+      />
 
-      <button>+ New Task</button>
+      <button @click="createTodoHandler">+ New Task</button>
     </div>
   </div>
 </template>
+
 <style scoped>
 header {
   background-color: blueviolet;
@@ -31,6 +49,7 @@ header {
   padding: 24px;
   font-weight: 600;
 }
+
 #todo {
   width: 100%;
   max-width: 250px;

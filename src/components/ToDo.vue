@@ -3,9 +3,9 @@
     <div class="todo-checkbox" v-if="todo.isDone === false" @click="completeTodoHandler"></div>
     <div class="todo-checkbox todo-completed" v-else @click="completeTodoHandler"></div>
 
-    <p>Lora mips alor</p>
+    <p :class="todo.isDone === true ? 'line-through' : ''">{{ todo.title }}</p>
 
-    <div>
+    <div @click="deleteTodoHandler">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['complete-todo'])
+const emit = defineEmits(['complete-todo', 'delete-todo'])
 const props = defineProps({
   todo: {
     type: Object,
@@ -35,6 +35,10 @@ const props = defineProps({
 })
 const completeTodoHandler = () => {
   emit('complete-todo')
+}
+
+const deleteTodoHandler = () => {
+  emit('delete-todo')
 }
 </script>
 
@@ -58,5 +62,8 @@ p {
 }
 .todo-completed {
   background-color: blue;
+}
+.line-through {
+  text-decoration: line-through;
 }
 </style>
